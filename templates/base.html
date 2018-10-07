@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Build A Blog</title>
-        <style type="text/css">
-        .error {color: red;}
-        .header {text-align: center;}
-        </style>
-    </head>
-    <body>
-        <div id="navigation">
-            <a href="/blog">Main Page</a>
-            <a href="/newpost">Add A Blog Post</a>
-        </div>
-        {% block content %}
+	<head>
+		<title>Build A Blog</title>
+		<link href="{{ url_for('static',filename='styles/style.css') }}" type="text/css" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+	</head>
+		<body>
+		<div id="navigation">
+			<a href="/blog">Main Page</a>
+			<a href="/newpost">Add A Blog Post</a>
+		</div>
+		{% block content %}
 
-        {% endblock %}
-    </body>
+		{% endblock %}
+	</body>
 </html>
