@@ -10,6 +10,10 @@ body {
 .header {
 	color: orange;
 }
+.datetime {
+	color: white;
+	font-size: x-small;
+}
 #navigation {
 /*	background-color: #333;*/
 	border-radius: 5px;

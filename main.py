@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['DEBUG'] = True      # displays runtime errors in the browser, too
@@ -13,20 +14,24 @@ class Blog(db.Model):
 	title = db.Column(db.String(120))
 	body = db.Column(db.Text)
 	deleted = db.Column(db.Boolean)
+	post_date = db.Column(db.DateTime)
 
-	def __init__(self,title,body):
+	def __init__(self,title,body,post_date=None):
 		self.title = title
 		self.body = body
+		if post_date is None:
+			post_date = datetime.now()
+		self.post_date = post_date
 		self.deleted = False
 
 	def __repr__(self):
 		# return '<Post %r>' % self.title
-		return "<Blog(id='%r', title='%r', body='%r', deleted='%r')>" % (self.id, self.title, self.body, self.deleted)
+		return "<Blog(id='%r', title='%r', body='%r', post_date=%r, deleted='%r')>" % (self.id, self.title, self.body, self.post_date, self.deleted)
 
 
 
 def all_active_blogs():
-	return Blog.query.all()
+	return Blog.query.order_by(Blog.post_date.desc()).all()
 
 def get_blog_post(id):
 	return Blog.query.get(id)
