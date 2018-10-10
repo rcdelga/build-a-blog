@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, flash, make_response
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -8,6 +8,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:buildablog
 app.config['SQLALCHEMY_ECHO'] = True
 
 db = SQLAlchemy(app)
+
+app.secret_key = "build-a-blog"
 
 class Blog(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -56,12 +58,23 @@ def index():
 
 @app.route("/blog")
 def blogs():
+	count = int(request.cookies.get('visit-count', 0))
+	count += 1
+	message = "You have visited this page {0} time(s).".format(str(count))
+
+	# resp = make_response(message)
+	# resp.set_cookie('visit-count', str(count))
+	# return resp
+
 	bid = request.args.get('id')
 
 	if bid:
 		return render_template('id.html',post=get_blog_post(bid))
 	else:
-		return render_template('blog.html',blogs=all_active_blogs())
+		resp = make_response(render_template('blog.html',blogs=all_active_blogs(),message=message))
+		resp.set_cookie('visit-count', str(count))
+		return resp
+
 
 @app.route("/newpost")
 def new_post():

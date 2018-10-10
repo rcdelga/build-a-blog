@@ -4,15 +4,26 @@ html{
 
 body {
 	background-color: black;
-	color: #EEE;
+	color: white;
+}
+
+h2, p {
+	margin: 0;
 }
 
 .header {
 	color: orange;
 }
+
+.cookie {
+	color: #999;
+	text-align: center;
+}
+
 .datetime {
-	color: white;
+	color: #999;
 	font-size: x-small;
+	margin-bottom: 30px;
 }
 #navigation {
 /*	background-color: #333;*/
